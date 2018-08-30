@@ -15,4 +15,9 @@ class UserController{
         ]);
         
     }
+
+    public function world(){
+
+        echo "helloworld";
+    }
 }
