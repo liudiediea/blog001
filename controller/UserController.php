@@ -10,7 +10,7 @@ class UserController{
         $user = new User;
         $name = $user->getName();
 
-        return view('user.hello',[
+        return view('users.hello',[
             'name'=>$name,
         ]);
         

@@ -6,7 +6,9 @@ define('ROOT',dirname(__FILE__).'/../');
 //类的自动加载
 function autoload($class){
 
-    $path = str_replace('\\','/'.$class);
+  
+    
+    $path = str_replace('\\','/',$class);
     require ROOT.$path.'.php';
 
     
@@ -14,16 +16,23 @@ function autoload($class){
     //注册加载函数
     spl_autoload_register('autoload');
 
-    $usercontroller = new controller\UserController;
-    $usercontroller->hello();
+  $usercontroller = new controller\UserController;
+  $usercontroller->hello();
 
-    function view($a,$b){
 
-        //如果传了数组 就把数组展开
-        if($data){
-            //extract 可以把一个数组转为多个变量
-            extract($data);
-        }
-        //加载视图文件
-        require_once ROOT . 'views/'.str_replace('.','/',$file).'.html';
+  //第一参数：要加载的视图文件的 文件名
+  //第二参数：想视图中传递的数组
+  function view($viewFileName,$data = [ ]){
+
+     // extract 可以把一个数组转为多个变量
+      extract($data);
+
+   
+     // 加载视图文件
+      $path = str_replace('.','/',$viewFileName);
+      require(ROOT.'views/'.$path.'.html');
+    // echo ROOT.'views/'.$path;
+   
+  
     }
+    
