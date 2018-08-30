@@ -16,7 +16,14 @@ function autoload($class){
 
     $usercontroller = new controller\UserController;
     $usercontroller->hello();
-    
+
     function view($a,$b){
 
+        //如果传了数组 就把数组展开
+        if($data){
+            //extract 可以把一个数组转为多个变量
+            extract($data);
+        }
+        //加载视图文件
+        require_once ROOT . 'views/'.str_replace('.','/',$file).'.html';
     }
