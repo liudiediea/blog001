@@ -56,4 +56,17 @@ function autoload($class){
    
   
     }
+    //获取当前URL上的参数 并且还能排除掉某些参数
+    function getUrlParams($except = [])
+    {
+        $ret = '';
+    
+        foreach($_GET as $k => $v)
+        {
+            if(!in_array($k, $except))
+                $ret .= "&$k=$v";
+        }
+    
+        return $ret;
+    }
     
