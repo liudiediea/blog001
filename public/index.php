@@ -52,7 +52,7 @@ function autoload($class){
      // 加载视图文件
       $path = str_replace('.','/',$viewFileName);
       require(ROOT.'views/'.$path.'.html');
-    // echo ROOT.'views/'.$path;
+    // echo ROOT.'views'.$path.'.html';
    
   
     }
