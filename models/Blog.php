@@ -152,4 +152,15 @@ class BLog{
   
     }
     
+//从数据库中取出日志的浏览量
+public function getDisplay($id){
+
+   
+    //判断
+    $stmt = $this->pdo->prepare('select display from blogs where id=?');
+    $stmt->execute(['id']);
+
+    return $stmt->fetch(PDO::FETCH_COLUMN);
+}
+    
 }
