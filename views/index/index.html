@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <h1>最新发表日志</h1>
+    <ul>
+        <?php foreach($blogs as $v): ?>
+
+        <li>
+            <a href="contents/<?=$v['id']?>.html" target="_blank"></a>
+            <?=$v['title']?>
+        </li>
+
+        <?php endforeach; ?>
+    </ul>
+</body>
+</html>
