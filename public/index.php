@@ -3,6 +3,9 @@
             //获取当前文件的路径
 define('ROOT',dirname(__FILE__).'/../');
 
+//引入 composer 自动加载文件
+require(ROOT.'vendor/autoload.php');
+
 //类的自动加载
 function autoload($class){
     // echo $class;
