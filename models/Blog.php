@@ -151,4 +151,5 @@ class BLog{
           file_put_contents(ROOT.'public/index.html', $str);
   
     }
+    
 }
