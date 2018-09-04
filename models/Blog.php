@@ -155,12 +155,50 @@ class BLog{
 //从数据库中取出日志的浏览量
 public function getDisplay($id){
 
-   
-    //判断
-    $stmt = $this->pdo->prepare('select display from blogs where id=?');
-    $stmt->execute(['id']);
+     //使用日志id拼出键名
+    $key = "blog-{$id}";
+    //链接redis
+    $redis = new\Predis\Client([
+        'scheme' => 'tcp',
+        'host'=>'127.0.0.1',
+        'port'=>6379,
+    ]);
 
-    return $stmt->fetch(PDO::FETCH_COLUMN);
+    //判断hash中是否有这个值
+    if($redis->hexists('blog_displays',$key)){
+        //累加并且 返回加完之后的值
+        $newNum = $redis->hincrby('blog_displays',$key,1);
+        echo $newNum;
+    }else{
+        //从数据库中取出浏览量
+        $stmt = $this->pdo->prepare('select display from blogs where id=?');
+        $stmt->execute([$id]);
+        $display = $stmt->fetch(PDO::FETCH_COLUMN);
+        $display++;
+        //保存到redis
+        $redis->hset('blog_displays',$key,$display);
+        echo $display;
+
 }
     
+}
+//把内存中的浏览量写回到数据库中
+public function displayToDb(){
+    //1.先取出内存中所有的浏览量
+    //连接redis
+    $redis = new \Predis\Client([
+        'scheme' => 'tcp',
+        'host' => '127.0.0.1',
+        'port' => 6379,
+    ]);
+
+    $data = $redis->hegetall('blog_displays');
+
+    //2.更新回数据库
+    foreach($data as $k=>$v){
+        $id = str_replace('blog-','',$k);
+        $sql = "update blogs display={$v} where id ={$id}";
+        $this->pdo->exec($sql);
+    }
+}
 }
