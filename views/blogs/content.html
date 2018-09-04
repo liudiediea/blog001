@@ -10,8 +10,24 @@
     <p><?=$blog['content']?></p>
 </body>
 </html>
-<script>
-    $id = "<?=$blog['id']?>";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "<?=$blog['id']?>";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

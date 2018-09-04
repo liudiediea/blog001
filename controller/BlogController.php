@@ -28,8 +28,10 @@ class BlogController{
     {
         //接收日志id
         $id = (int)$_GET['id'];
-        
+        // echo $id;
+        // echo" <br/>";
         $blog = new Blog;
+        //把浏览量+1 并输出 （如果内存中没有就查询数据库，如果内存有就直接操作）
         echo $blog->getDisplay($id);
 
     }

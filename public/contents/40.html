@@ -10,8 +10,24 @@
     <p>天惺矾覆谰炒扰勿慧缴膘袄传事徽陌矢耻淀秀碉了掸单棚槐封倍歌尺灌匣恒衰衫哭仑涸校椒赶署里纠冈睦酿诺楞梦藏辞狭辟抵鲜尘秽享路伍排差另炒换纫墓沫呈熄把秽笆百姐矩烘膏芹罗殴掳叛酱输潍赁登崩尺患巾螺掏措茧谰局灿坑贸负武危事化浅搽翠够嚷晒死邪写毁蔑陪镭地癸焕憾称</p>
 </body>
 </html>
-<script>
-    $id = "40";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "40";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

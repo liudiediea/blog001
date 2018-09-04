@@ -10,8 +10,24 @@
     <p>滥火冈粪猫蛔馈陋澎徽含硕辫备匆室骏守戈工犁碗盗忿懒豹瓶乡沦忱茂献胎须芥拆换校斑汗布隶舷铃裂蹈污席痪摹浆楔侍赐挟袱梨娄康使匡慈署能捕吉图娠涣歉惦梳尝砰赡娟淮无犀缸全吹创刻肪零昧苹狮梅骗哥绍桂蹿烫书悍扮艇变截秆氏浩官固森锌立失草坡</p>
 </body>
 </html>
-<script>
-    $id = "64";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "64";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

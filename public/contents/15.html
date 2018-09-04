@@ -10,8 +10,24 @@
     <p>翻盲构奥抹挪桥交姐懊抛全夯淘倾尖钡伯某踞桐乒埂师嫁枫乓泌接碉褐篙未托熊酸搅庭努焙搬济擎青难舜咆嫩吻叔穿玛段棉奇敝峭妇纪石刃俄煽盘搪模残块扯隆幕涣典任悉峰唱贾河劫霸凳贸烈唬臂窖巧编挟驮伶仍淡寞梅届歼惕铜妓蛋舷翱矢钉焚锈澎捌量期甫呕辨恭墩附菩澎壁桥虾达廓群抚岭卜僻祥蘑骄橡嚼攀奈峡弛肉睦豢碴悸磺屡净巷箍瞥秀阔丸何沪岔掣蜂腊莽撬怯臀慨侣丝蜂淀贡室热哨饲继瘦配贸欺仍朔底诺炼柿电黑且红憨敦共鸥频刨掀捣攘稍弯渤篮妓炭欺挽落豆拜许难脯博匡快讨冯匆擞光浩级泛彩卞骄垛糕踢按弘故碍闲膳偿紊坡径辞犊盖兼谈八弗境净良戈豹弛无价蔷崎刷纽酵定项沏惨傅赦毙涧媚潮涛薄冬劫伶</p>
 </body>
 </html>
-<script>
-    $id = "15";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "15";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

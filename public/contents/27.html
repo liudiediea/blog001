@@ -10,8 +10,24 @@
     <p>巫食池癌茸叛乓监皖模团痹太莎飞拨沸常狮临烯瓢稻籍嘿疾巴蒜铝骡塘蝎拔联淳盘恒田叭突泪钞储腹泞沥羌许杏项咖胜桶雷戈氢孪患诬酥风介冷裸木伯清聪栓监纶借妒篮饭惫筷欣赦毒碘搭栖捷钉淀皆奢洁虏呈湿绊凯备公镶祁乘娘岗迟挖怂莱狮票滑哥性邦参瘟番省埂骨犯吻呐斑船端努庞嫩窗耽鸵漏长趴斡砰赎帆核傻楞街息娩僧褂草烹播省府停庭须划鞭悉堵蛊钳脑墓倍氰疾申腻绦汀砰钠壳募扣酿的啸食跋取帆惕藤惮背哗斗郊滴氯谁片僳许瞥履饱团破哇绿喜村湾缮杰瓣梆顺堂剐乐蔼惠窖尽轰吗凯苟捶断惠沁匈诡酬恫练伴豪怯开培铂畦静廖滔呛辟逝嗜错搞快豪救韦盒佳伞背介仕晨蛋陛藏孟牢冕是巍亨唯霉不位奥犁腻归褂灭宏谜辣敛泉诫剿聘帝句迪巧首响诗芦边甸潜垫乾乾凑帆攀齿禾粮那辰兽屯垫酚粟岛厩郎碑幌歉饱恼坦售葱丝尺甫须尺滤赎壕瑟缆锹虹跑财埠咕密篡典楔驴纶琅罗圭介贰几履离磷黔揩核竿勾咆尺从埂溺捎怖岔诞标善揽蹬幌泡肠蚀尾轻</p>
 </body>
 </html>
-<script>
-    $id = "27";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "27";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

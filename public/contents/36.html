@@ -10,8 +10,24 @@
     <p>胃凰邵奖赤漠鸡佬环齐淮榷努据绢泪倒味戮隶瘁顶毯乐掂囱含取阂李达钝揣汾木缉板擒骏梦舰祈黔顿履句现伯倪味炒幢磨忙惮户思蛋分狠鞍陀车锌挛盛玖软仑策瑟劲沤铺聊攫报囤先帆绊嚏峰彪仕娠汇箩蕾炼冈困独泛苇虑瀑绰点扮诧填传箱款斤善耿矛淑宋辞钉微完柑竣孺蛊舷下厂豪孝哼培反悸坡斗好庆楞寝态须途坦户郝渐马寿抨难麻厘韶朝习蒙惕镶持喇混窝邯创毕绍汕抄铂物慕电薯漂冠瓣泰哇画躲侮铃顽孺狮幻安矢龟翘覆倪嗽瑟趟痕钠肆孤鹅渭眯扦炬射骏邻挤胯观禄翘敲剂奸变拭狭</p>
 </body>
 </html>
-<script>
-    $id = "36";
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+
+    //获取当前日志的id
+    var id = "36";
     //定义接口地址
-    var url = "/blog/display?id='$id' "
+    var url = "/blog/display?id=" + id;
+
+    //请求这个地址
+   $.ajax({
+       type:"GET",
+       url:url,
+       success:function(data){
+           $("#display").html(data);
+       }
+   });
 </script>

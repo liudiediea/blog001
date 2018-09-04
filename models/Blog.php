@@ -156,7 +156,8 @@ class BLog{
 public function getDisplay($id){
 
      //使用日志id拼出键名
-    $key = "blog-{$id}";
+     $key = "blog-{$id}";
+    // echo $key;
     //链接redis
     $redis = new\Predis\Client([
         'scheme' => 'tcp',
