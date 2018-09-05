@@ -1,4 +1,12 @@
 <?php
+
+    // //设置SESSION 保存
+    // ini_set('session.save_handler','redis');
+    // ini_set('session.save_path','tcp://127.0.0.1:6379?database=3');
+
+    // //开启session
+    // session_start();
+
 //定义常量
             //获取当前文件的路径
 define('ROOT',dirname(__FILE__).'/../');

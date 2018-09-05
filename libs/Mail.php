@@ -31,19 +31,20 @@ class Mail
                 ])   // 收件人
                 ->setBody($content, 'text/html');     // 邮件内容及邮件内容类型
        
-        //如果是调试模板就写日志
-        if($config['mode'] == 'debug'){
-            //获取邮件的所有信息
+        // 如果是调试模式就写日志
+        if($config['mode'] == 'debug')
+        {
+            // 获取邮件的所有信息
             $mess = $message->toString();
 
-            //把邮件的内容记录到日志中
+            // 把邮件的内容记录到日志中
             $log = new Log('email');
-            $log -> log($mess);
-
+            $log->log( $mess );
         }
-        else{
+        else
+        {
             // 发送邮件
-    $this->mailer->send($message);
+            $this->mailer->send($message);
         }
     }
 }

@@ -3,7 +3,7 @@ namespace controller;
 
 class IndexController{
     function index(){
-        echo "LLLLLLLLAAAAAAAA";
+       view('index.index');
     }
 
     public function info(){
