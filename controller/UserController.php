@@ -48,14 +48,10 @@ class UserController{
         //把消息转成字符串  json => 序列化
         $message = json_encode($message);
         
-        //链接redis
-        $redis = new\Predis\Client([
-        'scheme' => 'tcp',
-        'host'=>'127.0.0.1',
-        'port'=>6379,
-         ]);
+        //连接redis
+        $redis = \libs\Redis::getInstance();
 
-         $redis->lpush('email',$message);
+        $redis->lpush('email', $message);
          echo "OK";
 
     }

@@ -80,3 +80,13 @@ function autoload($class){
         return $ret;
     }
     
+    function config($name)
+    {
+        static $config = null;
+        if($config === null)
+        {
+            // 引入配置文件 
+            $config = require(ROOT.'config.php');
+        }
+        return $config[$name];
+    }

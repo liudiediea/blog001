@@ -4,11 +4,7 @@ class TestController{
     public function register(){
         
         //发邮件
-        $redis = new\Predis\Client([
-            'scheme' => 'tcp',
-            'host'=>'127.0.0.1',
-            'port'=>6379,
-        ]);
+        $redis = \libs\Redis::getInstance();
         //注意队列的信息
         $data =[
             'email'=>'1542558263@qq.com',
@@ -26,11 +22,7 @@ class TestController{
         ini_set('default_socket_timeout',-1);
         echo "邮件已经启动。。。。等待中。。。";
 
-        $redis = new\Predis\Client([
-            'scheme' => 'tcp',
-            'host'=>'127.0.0.1',
-            'port'=>6379,
-        ]);
+        $redis = \libs\Redis::getInstance();
         while(true){
             $data = $redis->brpop('email',0);
             echo "开始发邮件";
@@ -64,5 +56,17 @@ class TestController{
     public function testmail(){
         $mail = new \libs\Mail;
         $mail->send('测试mail类标题','测试mail类内容',['1542558263@qq.com','liuhaha']);
+    }
+    public function testconfig(){
+        $re = config('redis');
+        $db = config('db');
+        echo '<pre>';
+        var_dump($re);
+        var_dump($db);
+    }
+    public function testlog(){
+       $log = new \libs\Log('email');
+        $log->log('发表成功');
+
     }
 }

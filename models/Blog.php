@@ -1,18 +1,9 @@
 <?php
 
 namespace Models;
+
 use PDO;
-
-class BLog{
-  
-     public $pdo;   
-
-     public function __construct(){
- 
-         //连接数据库
-        $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=blog','root','');
-        $this->pdo->exec("SET NAMES utf8");
-     }
+class BLog extends Base{
 
       public function search(){     
         $where = 1;
@@ -72,7 +63,7 @@ class BLog{
 
         // 制作按钮
         // 取出总的记录数
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
+        $stmt = self::$pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
         $stmt->execute($value);
         $count = $stmt->fetch( PDO::FETCH_COLUMN );
         // 计算总的页数（ceil：向上取整（天花板）， floor：向下取整（地板））
@@ -91,7 +82,7 @@ class BLog{
 
 
         //执行sql
-        $stmt = $this->pdo->prepare("select * from blogs where $where ORDER BY $odby $odway LIMIT $offset,$perpage");  
+        $stmt = self::$pdo->prepare("select * from blogs where $where ORDER BY $odby $odway LIMIT $offset,$perpage");  
         $stmt->execute($value);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
        
@@ -133,7 +124,7 @@ class BLog{
     }
     public function index2html(){
           // 取 前20 条记录 数据 
-          $stmt = $this->pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
+          $stmt = self::$pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
           $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);   
           
           // 开启一个缓冲区
@@ -159,12 +150,8 @@ public function getDisplay($id){
      $key = "blog-{$id}";
     // echo $key;
     //链接redis
-    $redis = new\Predis\Client([
-        'scheme' => 'tcp',
-        'host'=>'127.0.0.1',
-        'port'=>6379,
-    ]);
-
+    $redis = \libs\Redis::getInstance();
+    
     //判断hash中是否有这个值
     if($redis->hexists('blog_displays',$key)){
         //累加并且 返回加完之后的值
@@ -172,7 +159,7 @@ public function getDisplay($id){
         echo $newNum;
     }else{
         //从数据库中取出浏览量
-        $stmt = $this->pdo->prepare('select display from blogs where id=?');
+        $stmt = self::$pdo->prepare('select display from blogs where id=?');
         $stmt->execute([$id]);
         $display = $stmt->fetch(PDO::FETCH_COLUMN);
         $display++;
@@ -187,11 +174,7 @@ public function getDisplay($id){
 public function displayToDb(){
     //1.先取出内存中所有的浏览量
     //连接redis
-    $redis = new \Predis\Client([
-        'scheme' => 'tcp',
-        'host' => '127.0.0.1',
-        'port' => 6379,
-    ]);
+    $redis = \libs\Redis::getInstance();
 
     $data = $redis->hegetall('blog_displays');
 
@@ -199,7 +182,7 @@ public function displayToDb(){
     foreach($data as $k=>$v){
         $id = str_replace('blog-','',$k);
         $sql = "update blogs display={$v} where id ={$id}";
-        $this->pdo->exec($sql);
+        self::$pdo->exec($sql);
     }
 }
 }
