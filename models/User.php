@@ -18,6 +18,7 @@ class User extends Base{
         ]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
         if($user){
+            
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
             return true;

@@ -1,11 +1,11 @@
 <?php
 
-    // //设置SESSION 保存
-    // ini_set('session.save_handler','redis');
-    // ini_set('session.save_path','tcp://127.0.0.1:6379?database=3');
+    //设置SESSION 保存
+    ini_set('session.save_handler','redis');
+    ini_set('session.save_path','tcp://127.0.0.1:6379?database=3');
 
-    // //开启session
-    // session_start();
+    //开启session
+    session_start();
 
 //定义常量
             //获取当前文件的路径
@@ -97,4 +97,33 @@ function autoload($class){
             $config = require(ROOT.'config.php');
         }
         return $config[$name];
+    }
+    function redirect($url){
+        header('Location:'.$url);
+        exit;
+    }
+    //跳回上一个页面
+    function back(){
+        redirect($_SESSION['HTTP_REFERER']);
+    }
+
+    //提示信息的函数
+    function message($message,$type,$url,$seconds =5){
+        if($type == 0){
+            echo "<script>alert('{$message}');location.href='{$url}';</script>";
+            exit;
+    
+        }else if($type ==1){
+            //加载消息页面
+            view('common.success',[
+                'message' => $message,
+                'url'=> $url,
+                'seconds'=>$seconds
+            ]);
+        }else if($type ==2){
+            //消息保存到SESSION
+            $_SESSION['_MESS_'] = $message;
+            //跳转到下一个页面
+            redirect($url);
+        }
     }

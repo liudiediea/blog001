@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>消息提示</h1>
+    <p><?=$message?></p>
+    <p>
+        <a href="<?=$url?>">点击跳转</a>到下一个页面
+    </p>
+    <p>
+        <span id="sec"><?=$seconds?></span>秒之后跳转到下一个页面
+    </p>
+</body>
+</html>
+<script>
+//把秒数保存到js中
+var sec = "<?=$seconds?>";
+//获取放秒的标签
+var sp = document.getElementById('sec');
+//启动美妙执行的定时器
+setInterval(function(){
+    //秒数减1
+    sec--;
+    //如果是减到0就跳转 否则就更新页面的秒数
+    if(sec == 0 )
+        location.href='<?=$url?>';
+    else
+        sp.innerHTML = sec;
+    
+},1000);
+</script>

@@ -185,4 +185,26 @@ public function displayToDb(){
         self::$pdo->exec($sql);
     }
 }
+public function add($title,$content,$is_show)
+{
+    $stmt = self::$pdo->prepare("insert into blogs(title,content,is_show,user_id) values(?,?,?,?)");
+    $ret = $stmt->execute([
+        $title,
+        $content,
+        $is_show,
+        $_SESSION['id'],
+    ]);
+    if(!$ret){
+        echo "失败";
+        //获取失败信息
+        $error = $stmt->errorInfo();
+        echo '<pre>';
+
+        var_dump($error);
+        exit;
+    }
+    //返回插入的记录的ID
+    return self::$pdo->lastInsertId();
+}
+
 }

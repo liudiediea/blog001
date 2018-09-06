@@ -98,12 +98,16 @@ class UserController{
     public function dologin(){
         $email = $_POST['email'];
         $pass = md5($_POST['password']);
-        $user = new \models\User;
-
+        //使用模型
+        $user = new User;
         if($user->login($email,$pass)){
-            die('登陆成功');
+            message('登陆成功', 2, '/blog/index');
         }else{
-            die('用户名或者密码错误');
+            message('用户名或者密码错误',1,'/user/login');
         }
+    }
+    public function logout(){
+        $_SESSION = [];
+        message('退出成功',2,'/');
     }
 }
