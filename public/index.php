@@ -8,12 +8,13 @@
     session_start();
 
     //验证令牌
-    if($_SERVER['REQUEST_METHOD']== 'POST'){
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
         if(!isset($_POST['_token']))
-        die('违法操作');
-
-        if($_POST['_token'] != $_SESSION['token']);
-        die('违法操作');
+            die('违法操作！');
+    
+        if($_POST['_token'] != $_SESSION['token'])
+            die('违法操作！');
     }
 
 
@@ -171,16 +172,17 @@ function autoload($class){
         
         // 过滤
         $clean_html = $purifier->purify($content);
-        return $clean_html;
+        return $purifier->purify($content);
     }
-    function csrf(){
-        if(isset($_SESSION['token'])){
-            //生成一个随机令牌
-           $token = md5( rand(1,9999) . microtime());
-           $_SESSION['token'] = $token;
+    function csrf()
+    {
+    if(!isset($_SESSION['token']))
+    {
+        // 生成一个随机的字符串
+        $token = md5( rand(1,99999) . microtime() );
+        $_SESSION['token'] = $token;
+    }
+  
         
-        }
-        
-        
-        return $token;
+        return $_SESSION['token'];
     }
