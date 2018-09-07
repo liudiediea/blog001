@@ -54,6 +54,15 @@ class BlogController{
         //跳转
         message('发表成功',2,'/blog/index');
     }
-  
+    public function delete()
+    {
+        $id = $_GET['id'];
+
+        $blog = new Blog;
+        $blog->delete($id);
+
+        message('删除成功',2,'/blog/index');
+        
+    }
  }
     

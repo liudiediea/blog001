@@ -7,6 +7,16 @@
     //开启session
     session_start();
 
+    //验证令牌
+    if($_SERVER['REQUEST_METHOD']== 'POST'){
+        if(!isset($_POST['_token']))
+        die('违法操作');
+
+        if($_POST['_token'] != $_SESSION['token']);
+        die('违法操作');
+    }
+
+
 //定义常量
             //获取当前文件的路径
 define('ROOT',dirname(__FILE__).'/../');
@@ -126,4 +136,51 @@ function autoload($class){
             //跳转到下一个页面
             redirect($url);
         }
+
+    }
+    function e($content){
+        return htmlspecialchars($content);
+    }
+
+    function hpe($content){
+        //一直保存在内存中（直到脚本执行结束）
+        static $purifier = null;
+        //只有第一次调用时创建新对象
+        if($purifier === null){
+            // 1. 生成配置对象
+        $config = \HTMLPurifier_Config::createDefault();
+        // 2. 配置
+        // 设置编码
+        $config->set('Core.Encoding', 'utf-8');
+        $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+        // 设置缓存目录
+        $config->set('Cache.SerializerPath', ROOT.'cache');
+        // 设置允许的 HTML 标签
+        $config->set('HTML.Allowed', 'div,b,strong,i,em,a[href|title],ul,ol,ol[start],li,p[style],br,span[style],img[width|height|alt|src],*[style|class],pre,hr,code,h2,h3,h4,h5,h6,blockquote,del,table,thead,tbody,tr,th,td');
+        // 设置允许的 CSS
+        $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,margin,width,height,font-family,text-decoration,padding-left,color,background-color,text-align');
+        // 设置是否自动添加 P 标签
+        $config->set('AutoFormat.AutoParagraph', TRUE);
+        // 设置是否删除空标签
+        $config->set('AutoFormat.RemoveEmpty', true);
+        // 3. 过滤
+        // 创建对象
+        $purifier = new \HTMLPurifier($config);
+
+        }
+        
+        // 过滤
+        $clean_html = $purifier->purify($content);
+        return $clean_html;
+    }
+    function csrf(){
+        if(isset($_SESSION['token'])){
+            //生成一个随机令牌
+           $token = md5( rand(1,9999) . microtime());
+           $_SESSION['token'] = $token;
+        
+        }
+        
+        
+        return $token;
     }

@@ -6,7 +6,15 @@ use PDO;
 class BLog extends Base{
 
       public function search(){     
-        $where = 1;
+        // 判断是否登录
+        if(!isset($_SESSION['id'])) {
+
+            $where = 1;
+        } else {
+            // 取出当前用户的日志
+            $where = 'user_id='.$_SESSION['id'];
+        }
+
         $value = [];
         //如果传了 keyword 参数并且值不为空添加where 条件
         if(isset($_GET['keyword']) && $_GET['keyword']){
@@ -206,5 +214,15 @@ public function add($title,$content,$is_show)
     //返回插入的记录的ID
     return self::$pdo->lastInsertId();
 }
+public function delete($id)
+{
+    // 只能删除自己的日志
+    $stmt = self::$pdo->prepare('DELETE FROM blogs WHERE id = ? AND user_id=?');
+    $stmt->execute([
+        $id,
+        $_SESSION['id'],
+    ]);
+}
+
 
 }
