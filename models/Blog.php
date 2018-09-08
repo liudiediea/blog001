@@ -214,15 +214,55 @@ public function add($title,$content,$is_show)
     //返回插入的记录的ID
     return self::$pdo->lastInsertId();
 }
-public function delete($id)
-{
-    // 只能删除自己的日志
-    $stmt = self::$pdo->prepare('DELETE FROM blogs WHERE id = ? AND user_id=?');
-    $stmt->execute([
-        $id,
-        $_SESSION['id'],
-    ]);
-}
+    public function delete($id)
+    {
+        // 只能删除自己的日志
+        $stmt = self::$pdo->prepare('DELETE FROM blogs WHERE id = ? AND user_id=?');
+        $stmt->execute([
+            $id,
+            $_SESSION['id'],
+        ]);
+    }
+    public function find($id)
+        {
+            $stmt = self::$pdo->prepare('SELECT * FROM blogs where id = ?');
+            $stmt->execute([
+                $id
+            ]);
+            // 取出数据
+            return $stmt->fetch();
+        }
+    public function update($title,$content,$is_show,$id)
+        {
+            $stmt = self::$pdo->prepare("UPDATE blogs SET title=?,content=?,is_show=? WHERE id=?");
+            $ret = $stmt->execute([
+                $title,
+                $content,
+                $is_show,
+                $id,
+            ]);
+        }
+    //为某一篇日志生成静态页
+    //参数：日志id
+    public function makehtml($id){
+        //1.取处日志详情
+        $blog = $this->find($id);
+
+        //2.打开缓冲区 并且加载视图到缓冲区
+        ob_start();
+        view('blogs.content',[
+            'blog'=>$blog,
+        ]);
+        //3.取出视图并写到静态页中 并清空缓冲区
+        $str = ob_get_clean();
+        file_put_contents(ROOT.'public/contents/'.$id.'.html',$str);
+    }
+
+    //删除静态页
+    public function delhtml($id){
+        //@防止报错 有就删 没有也不要报错
+        @unlink(ROOT.'public/contents/'.$id.'.html');
+    }
 
 
 }

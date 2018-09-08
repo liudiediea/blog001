@@ -49,7 +49,11 @@ class BlogController{
         $is_show = $_POST['is_show'];
 
         $blog = new Blog;
-        $blog->add($title,$content,$is_show);
+        $id = $blog->add($title,$content,$is_show);
+        //如果日志是公开的就生成静态页
+        if($is_show == 1){
+            $blog->makehtml($id);
+        }
 
         //跳转
         message('发表成功',2,'/blog/index');
@@ -63,6 +67,40 @@ class BlogController{
 
         message('删除成功',2,'/blog/index');
         
+    }
+    public function edit()
+    {
+        $id = $_GET['id'];
+        // 根据ID取出日志的信息
+
+        $blog = new Blog;
+        $data = $blog->find( $id );
+
+        view('blogs.edit', [
+            'data' => $data,
+        ]);
+
+    }
+    public function update()
+    {
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $is_show = $_POST['is_show'];
+        $id = $_POST['id'];
+        
+        $blog = new Blog;
+        $blog->update($title, $content, $is_show, $id);
+
+        //如果日志是公开的就重新生成静态页
+        if($is_show == 1){
+            $blog->makehtml($id);
+        }
+        else{
+            //如果改成私有 要把原来的静态页删掉
+            $blog->delhtml($id);
+        }
+
+        message('修改成功！', 0, '/blog/index');
     }
  }
     
