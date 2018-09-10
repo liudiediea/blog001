@@ -164,7 +164,7 @@ public function getDisplay($id){
     if($redis->hexists('blog_displays',$key)){
         //累加并且 返回加完之后的值
         $newNum = $redis->hincrby('blog_displays',$key,1);
-        echo $newNum;
+        return $newNum;
     }else{
         //从数据库中取出浏览量
         $stmt = self::$pdo->prepare('select display from blogs where id=?');
@@ -173,7 +173,7 @@ public function getDisplay($id){
         $display++;
         //保存到redis
         $redis->hset('blog_displays',$key,$display);
-        echo $display;
+        return $display;
 
 }
     
@@ -264,5 +264,9 @@ public function add($title,$content,$is_show)
         @unlink(ROOT.'public/contents/'.$id.'.html');
     }
 
+    public function getNew(){
+        $stmt = self::$pdo->query('SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

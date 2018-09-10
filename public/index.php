@@ -186,3 +186,8 @@ function autoload($class){
         
         return $_SESSION['token'];
     }
+    //生成令牌隐藏域
+    function csrf_field(){
+        $csrf = isset($_SESSION['token']) ? $_SESSION['token'] : csrf();
+        echo "<input type='hidden' name='_token' value='{$csrf}'>";
+    }

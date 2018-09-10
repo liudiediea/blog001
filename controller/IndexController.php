@@ -3,7 +3,13 @@ namespace controller;
 
 class IndexController{
     function index(){
-       view('index.index');
+
+       $blog = new \models\Blog;
+       $blogs = $blog->getNew();
+
+       view('index.index',[
+           'blogs'=>$blogs
+       ]);
     }
 
     public function info(){
