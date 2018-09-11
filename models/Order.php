@@ -71,7 +71,7 @@ class Order extends Base{
     }
     public function setPaid($sn){
         $stmt = self::$pdo->prepare('update orders set status=1,pay_time=now() where sn=?');
-
+        //执行sql并把结果返回 成功true 失败 false
         return $stmt->execute([
             $sn,
         ]);

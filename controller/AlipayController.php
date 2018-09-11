@@ -58,8 +58,6 @@ class AlipayController
             // 这里需要对 trade_status 进行判断及其它逻辑进行判断，在支付宝的业务通知中，只有交易通知状态为 TRADE_SUCCESS 或 TRADE_FINISHED 时，支付宝才会认定为买家付款成功。
             if($data->trade_status == 'TRADE_SUCCESS' || $data->trade_status == 'TRADE_FINISHED')
             {
-
-                // file_put_contents('./ok1', $data->trade_status);
                 // 更新订单状态
                 $order = new \models\Order;
                 // 获取订单信息
@@ -68,11 +66,20 @@ class AlipayController
                 // 如果订单的状态为未支付状态 ，说明是第一次收到消息，更新订单状态 
                 if($orderInfo['status'] == 0)
                 {
+                    
+                    //开启事务
+                    $order->startTrans();
                     // 设置订单为已支付状态
-                    $order->setPaid($data->out_trade_no);
+                    $res1 = $order->setPaid($data->out_trade_no);
                     // 更新用户余额
                      $user = new \models\User;
-                     $user->addMoney($orderInfo['money'], $orderInfo['user_id']);
+                     $res2 = $user->addMoney($orderInfo['money'], $orderInfo['user_id']);
+                }
+                if($res1 && $res2){
+                    $order->commit();
+                }
+                else{
+                    $order->rollback();
                 }
             }
 

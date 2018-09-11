@@ -15,4 +15,16 @@ class Base{
         }
         
      }
+     //开启事务
+     public function startTrans(){
+         self::$pdo->exec('start transaction');
+     }
+     //提交事务
+     public function commit(){
+        self::$pdo->exec('commit');
+     }
+     //回滚事务
+     public function rollback(){
+         self::$pdo->exec('rollback');
+     }
 }
