@@ -2,6 +2,7 @@
 namespace controller;
 
 use models\User;
+use models\Order;
 
 class UserController{
 
@@ -109,5 +110,34 @@ class UserController{
     public function logout(){
         $_SESSION = [];
         message('退出成功',2,'/');
+    }
+
+    public function charge(){
+        view('users.charge');
+    }
+
+    public function docharge(){
+        //生成订单
+        $money = $_POST['money'];
+        $model = new Order;
+        $model->create($money);
+
+        message('充值订单已经生成', 2, '/user/order');
+
+    }
+
+    public function order(){
+
+        $order = new Order;
+        $data = $order->search();
+        // echo '<pre>';
+        // var_dump($data);
+        // die;
+        view('users.order',$data);
+        
+    }
+    public function money(){
+        $user = new User;
+        echo $user->getMoney();
     }
 }

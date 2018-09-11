@@ -184,12 +184,12 @@ public function displayToDb(){
     //连接redis
     $redis = \libs\Redis::getInstance();
 
-    $data = $redis->hegetall('blog_displays');
+    $data = $redis->hgetall('blog_displays');
 
     //2.更新回数据库
     foreach($data as $k=>$v){
         $id = str_replace('blog-','',$k);
-        $sql = "update blogs display={$v} where id ={$id}";
+        $sql = "update blogs set display={$v} where id ={$id}";
         self::$pdo->exec($sql);
     }
 }

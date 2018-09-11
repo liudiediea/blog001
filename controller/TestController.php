@@ -101,4 +101,10 @@ echo $clean_html;
         $log->log('发表成功');
 
     }
+    public function testSnowflake(){
+        $flake = new \libs\Snowflake(1013);
+        for($i=0; $i<10; $i++){
+            echo $flake->nextId().'<br>';
+        }
+    }
 }
