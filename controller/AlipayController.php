@@ -8,9 +8,9 @@ class AlipayController
     public $config = [
         'app_id' => '2016091700531265',
         // 通知地址
-        'notify_url' => 'http://740930d3.ngrok.io/alipay/notify',
+        'notify_url' => 'http://ldd.tunnel.echomod.cn/alipay/notify',
         // 跳回地址
-        'return_url' => 'http://localhost:9999/alipay/return',
+        'return_url' => 'http://ldd.tunnel.echomod.cn/alipay/return',
         // 支付宝公钥
         'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxzwiqczlk2OQgpC4unBkB0tinoIqLmbUh8E/f0xUcoCzf2EMAVORUh0NV+nP3tAB7FnW0Vl40kt2NoglgyBp/tlzZrP0xv+GCqppaKK9kYx5QuEtk4rqGaywFctVO03FxwjdaJUKknMuCMfom5iwvtQDFUZ7R4tSYv0EoC7uoUmY7AQHGI1WuDhqSJ9lM+J6fITMh90+Ino4NjcsmQXu24piwP2AUItjmvUAiNQxjp8F3VUpYPMCazHbjMLXXMq8bvFMen7A/i05bpB3hV/Z2wvcdwJnlkWA1Sfawnfne5ZwRBJtRZNgGW97Xnl3ZMYs9fjlYdU3FVWv/00LWJikHwIDAQAB',
         // 商户应用密钥
@@ -21,6 +21,8 @@ class AlipayController
     // 发起支付
     public function pay()
     {
+        // chvaqa2224@sandbox.com 
+        
         //接收订单Binahao
         $sn = $_POST['sn'];
         //取出订单信息 比如：金额
@@ -123,4 +125,5 @@ class AlipayController
             var_dump( $e->getMessage() );
         }
     }
+
 }

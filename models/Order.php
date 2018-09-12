@@ -47,8 +47,6 @@ class Order extends Base{
             $btns .= "<a class='$class' href='?{$params}page=$i'> $i </a>";
             
         }
-
-
         //执行sql
         $stmt = self::$pdo->prepare("select * from orders where $where ORDER BY $odby $odway LIMIT $offset,$perpage");  
         $stmt->execute();

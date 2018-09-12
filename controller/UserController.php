@@ -140,4 +140,26 @@ class UserController{
         $user = new User;
         echo $user->getMoney();
     }
+
+    public function orderStatus()
+    {
+        $sn = $_GET['sn'];
+        $try = 10;
+        $model = new Order;
+       
+        do{
+            //查询订单信息
+            $info = $model->findBySn($sn);
+            //如果订单未支付 就等待1秒 并减少尝试的次数 如果已经支付就退出循环
+            if($info['status'] == 0){
+                sleep(1);
+                $try --;
+            } 
+            else
+                break;
+
+            }while($try>0); //如过尝试次数达到指定的系数就退出循环
+            echo $info['status'];  
+     }
+    
 }
