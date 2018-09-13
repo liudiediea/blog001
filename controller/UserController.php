@@ -169,22 +169,11 @@ class UserController{
 
      public function setavatar(){
         
-         //1.创建目录
-        $root = ROOT.'public/uploads/'; // 根目录
-        $date = date('Ymd');    //今天日期
-        //判断有没有这个目录  没有就创建
-        if(!is_dir($root.$date)){
-            mkdir($root.$date, 0777);
-        }
+        $upload = \libs\Upload::getInstance();
+        $path = $upload->upload('avatar', 'avatar');
 
-        //2.生成唯一的文件名
-        $name = md5(time() . rand(1,9999));
-        //补上文件后缀  (字符串截取)
-        $ext = strrchr($_FILES['avatar']['name'],'.');
-        $name = $name.$ext;
+        echo $path;
 
-        //3.移动图片
-        move_uploaded_file($_FILES['avatar']['tmp_name'],$root.$date.'/'.$name);
 
      }
 

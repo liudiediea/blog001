@@ -21,38 +21,3 @@
     <?php view('common.footer')?>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-    var img = document.getElementById("img");
-    img.onchange = function(){
-        var img1 = this.files[0];  //获取一张图片
-        var filesize = img1.size;  //图片尺寸
-        var persize = 4096;  //4k
-        var count = Math.ceil(filesize / persize); //上传的块数
-        var name = "img_"+Math.random(1,99999);
-        
-        for(var i =0;i<count;i++){
-            var img0 = img1.slice(i*persize,i*persize*persize);
-
-            //加入表单中的
-            var f = new FormData;
-            f.append("img",img0);  //图片数据
-            f.append("count",count);    //图片块数
-            f.append("i",i);    //当前图片是第几块
-            f.append('size',persize);
-            f.append('img_name',name);
-
-            $.ajax({
-                type:"POST",
-                url:"/user/mergeimg",
-                data:f,
-                contentType: false,
-                processData: false,
-                success:function(data){
-
-                }
-            })
-        }
-
-    }
-</script>
