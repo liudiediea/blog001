@@ -184,12 +184,51 @@ class BlogController{
             
         // 读取并输出文件内容
         readfile($file);
-            
-       
-
-
-
 
     }
+     // 点赞
+     public function agreements()
+     {
+         $id = $_GET['id'];
+
+         // 判断登录
+         if(!isset($_SESSION['id']))
+         {
+             echo json_encode([
+                 'status_code' => 403,
+                 'message' => '必须先登录'
+             ]);
+             die();
+         }
+ 
+         // 点赞
+         $model = new \models\Blog;
+         $ret = $model->agree($id);
+         if($ret)
+         {
+             echo json_encode([
+                 'status_code' => 200,
+             ]);
+         }
+         else
+         {
+             echo json_encode([
+                 'status_code' => '403',
+                 'message' => '已经点赞过了'
+             ]);
+         }
+     }
+     //点赞列表
+     public function agreelist(){
+         $id = $_GET['id'];
+        
+         $model = new \models\Blog;
+         $data = $model->agreelist($id);
+
+         echo json_encode([
+             'status_code'=>200,
+             'data' => $data,
+         ]);
+     }
  }
     

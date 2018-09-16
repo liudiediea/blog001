@@ -15,6 +15,7 @@ class User extends Base{
         $stmt->execute([
             $email,
             $pass,
+            
         ]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
         if($user){
@@ -22,6 +23,7 @@ class User extends Base{
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['money'] = $user['money'];
+            $_SESSION['avatar'] = $user['avatar'];
             return true;
         }
         else{
@@ -49,4 +51,19 @@ class User extends Base{
         $_SESSION['money'] = $money;
         return $money;
     }
+    
+     public function setAvatar($path){
+        $stmt = self::$pdo->prepare('update users set avatar = ? where id = ?');
+        $stmt->execute([
+            $path,
+            $_SESSION['id'],
+        ]);
+     }
+
+     public function getAll(){
+        $stmt = self::$pdo->query('select * from users');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+   
+     
 }

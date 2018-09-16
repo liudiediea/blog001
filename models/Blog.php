@@ -269,4 +269,55 @@ public function add($title,$content,$is_show)
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // 点赞
+    public function agree($id)
+    {
+        // 判断是否点过
+        $stmt = self::$pdo->prepare('SELECT COUNT(*) FROM blog_agree WHERE user_id=? AND blog_id=?');
+        $stmt->execute([
+            $_SESSION['id'],
+            $id
+        ]);
+        $count = $stmt->fetch( PDO::FETCH_COLUMN );
+        if($count)
+        {
+            return FALSE;
+        }
+        
+         // 点赞
+         $stmt = self::$pdo->prepare("INSERT INTO blog_agree(user_id,blog_id) VALUES(?,?)");
+         $ret = $stmt->execute([
+             $_SESSION['id'],
+             $id
+         ]);
+        
+         
+        //  更新点赞数
+         if($ret)
+         {
+             $stmt = self::$pdo->prepare('UPDATE blogs SET agree_count=agree_count+1 WHERE id=?');
+             $stmt->execute([
+                 $id
+             ]);
+         }
+ 
+         return $ret;
+    }
+    //点赞列表
+    public function agreelist($id){
+        $sql = 'SELECT b.id,b.email,b.avatar 
+                    FROM blog_agree a
+                         LEFT JOIN users b ON a.user_id = b.id
+                             WHERE a.blog_id=?';
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->execute([
+            $id
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+
 }

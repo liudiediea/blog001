@@ -172,6 +172,17 @@ class UserController{
         $upload = \libs\Upload::getInstance();
         $path = $upload->upload('avatar', 'avatar');
 
+        //保存到user表中
+        $model = new \models\User;
+        $model->setAvatar('/uploads/'.$path);
+
+        //删除原图片
+        @unlink(ROOT .'public'.$_SESSION['avatar']);
+        //设置新头像
+        $_SESSION['avatar'] = '/uploads/'.$path;
+
+        message('设置成功', 2, '/blog/index');
+
         echo $path;
 
 
@@ -237,6 +248,7 @@ class UserController{
             $redis->del($name);
           }
      }
+    
 
     
 }
