@@ -47,7 +47,7 @@ class RedController{
         }
 
         //5.下订单
-        $redis->lpush('redbag_order', $_SESSION['id']);
+        $redis->lpush('redbag_orders', $_SESSION['id']);
 
         $redis->sadd($key,$_SESSION['id']);
         echo json_encode([
@@ -66,13 +66,13 @@ class RedController{
         $redis->sadd($key,'-1');
         //设置过期时间
         $redis->expire($key,3900);     
-        
+
     }
     //监听消息队列
     public function makeOrder(){
         $redis = \libs\Redis::getInstance();
         $model = new \models\Red;
-
+  
         // 设置 socket 永不超时
         ini_set('default_socket_timeout', -1); 
 
@@ -81,7 +81,7 @@ class RedController{
         while(true){
             $data = $redis->brpop('redbag_orders',0);
 
-            $userId = $daa[1];
+            $userId = $data[1];
             //下订单
             $model->create($userId);
 
