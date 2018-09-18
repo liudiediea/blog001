@@ -3,6 +3,7 @@ namespace controller;
 
 use models\User;
 use models\Order;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class UserController{
 
@@ -168,10 +169,14 @@ class UserController{
      }
 
      public function setavatar(){
-        
+        //上传图片
         $upload = \libs\Upload::getInstance();
         $path = $upload->upload('avatar', 'avatar');
 
+        //裁切图片
+        $img = Image::make(ROOT. 'public/uploads/'.$path);
+        $img->crop((int)$_POST['w'],(int)$_POST['h'],(int)$_POST['x'],(int)$_POST['y']);
+        $img->save(ROOT.'public/uploads/'.$path);
         //保存到user表中
         $model = new \models\User;
         $model->setAvatar('/uploads/'.$path);

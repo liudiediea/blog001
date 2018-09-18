@@ -1,5 +1,6 @@
 <?php
 namespace controller;
+use Intervention\Image\ImageManagerStatic as Image;
 class TestController{
 
     public function testPurify(){
@@ -106,5 +107,15 @@ echo $clean_html;
         for($i=0; $i<10; $i++){
             echo $flake->nextId().'<br>';
         }
+    }
+
+    public function testImage(){
+        //打开要处理的文件
+        $image = Image::make(ROOT . 'public/uploads/big/big.jpg');
+        //加水印
+        $image->insert(ROOT . 'public/uploads/big/water.jpeg','top-right');
+        //保存图片
+        $image->save(ROOT . 'public/uploads/big_water.png');
+
     }
 }

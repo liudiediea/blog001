@@ -1,4 +1,6 @@
 <?php
+    //设置时区
+    date_default_timezone_set('PRC');
 
     //设置SESSION 保存
     ini_set('session.save_handler','redis');

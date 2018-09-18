@@ -20,7 +20,7 @@ class BlogController{
         $blog = new Blog;
         $blog->content2html();
 
-        $display =  $blog->getDisplay($id);
+        $display =  $blog->getDisplay();
 
         // 返回多个数据时必须要用 JSON
 
