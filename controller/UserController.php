@@ -253,6 +253,13 @@ class UserController{
             $redis->del($name);
           }
      }
+
+     //活跃用户
+     public function active(){
+
+         $model = new User;
+         $model->active();
+     }
     
 
     

@@ -17,6 +17,20 @@
 
         <?php endforeach; ?>
     </ul>
+
+    <h1>活跃用户</h1>
+    <ul>
+        <?php foreach($users as $v): ?>
+
+        <li>
+            
+            
+            <img src="<?=$v['avatar'] ? $v['avatar'] :'/images/avatar.jpg' ?>  "  style="width: 50px;" title="<?=$v['email']?>">
+
+        </li>
+
+        <?php endforeach; ?>
+    </ul>
     <?php if(config('mode') == 'dev'): ?>
     <select name="" id="alluser">
         <option value="">选择账号
